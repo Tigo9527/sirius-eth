@@ -26,12 +26,18 @@ export function Tokens() {
   const { tokenType = CFX_TOKEN_TYPES.erc20 } = useParams<RouteParams>();
   const { orderBy } = queryString.parse(location.search);
 
-  let columnsWidth = [1, 7, 4, 3, 3, 3, 2];
+  let columnsWidth = [1, 2, 7, 4, 2, 3, 3, 2, 4];
   let columns = [
     {
       ...utils.number,
       render(value, row, index) {
         return utils.number.render(value, row, index, 3);
+      },
+    },
+    {
+      ...utils.number,
+      render(value, row, index) {
+        return row.hex40id;
       },
     },
     tokenColunms.token,
@@ -76,14 +82,26 @@ export function Tokens() {
   let title = t(translations.header.tokens20);
 
   if (tokenType === CFX_TOKEN_TYPES.erc721) {
-    columnsWidth = [1, 7, 5, 3, 3];
+    columnsWidth = [1, 2, 6, 4, 2, 3, 3];
     columns = [
       utils.number,
+      {
+        ...utils.number,
+        render(value, row, index) {
+          return row.hex40id;
+        },
+      },
       tokenColunms.token,
       tokenColunms.contract(),
       {
         ...tokenColunms.transfer,
         sorter: true,
+      },
+      {
+        ...utils.number,
+        render(value, row, index) {
+          return row.totalSupply;
+        },
       },
       {
         ...tokenColunms.holders,
@@ -106,14 +124,26 @@ export function Tokens() {
   }
 
   if (tokenType === CFX_TOKEN_TYPES.erc1155) {
-    columnsWidth = [1, 5, 4, 2, 2];
+    columnsWidth = [1, 2, 5, 4, 2, 2, 2];
     columns = [
       utils.number,
+      {
+        ...utils.number,
+        render(value, row, index) {
+          return row.hex40id;
+        },
+      },
       tokenColunms.token,
       tokenColunms.contract(),
       {
         ...tokenColunms.transfer,
         sorter: true,
+      },
+      {
+        ...utils.number,
+        render(value, row, index) {
+          return row.totalSupply;
+        },
       },
       {
         ...tokenColunms.holders,

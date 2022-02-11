@@ -66,7 +66,9 @@ export function Transaction() {
           content={t(translations.transaction.description)}
         />
       </Helmet>
-      <PageHeader>{t(translations.transaction.title)}</PageHeader>
+      <PageHeader subtitle={hash}>
+        {t(translations.transaction.title)}
+      </PageHeader>
       <TabsTablePanel tabs={tabs} />
     </StyledPageWrapper>
   );
