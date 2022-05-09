@@ -20,6 +20,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import DownIcon from '../../../images/down.png';
 import styled from 'styled-components';
 import { media } from '../../../styles/media';
+import { HexId } from './HexId';
 
 interface RouteParams {
   address: string;
@@ -76,7 +77,7 @@ export const AddressDetailPage = memo(() => {
             <span className="address">{address}</span>
             <div className="icons">
               <Copy address={address} />
-              <Qrcode address={address} />
+              <Qrcode address={address} /> <HexId />
               <DropdownWrapper overlay={menu} trigger={['click']}>
                 <span onClick={e => e.preventDefault()}>
                   {t(translations.general.address.more.title)}{' '}
