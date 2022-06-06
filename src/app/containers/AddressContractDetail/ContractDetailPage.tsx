@@ -29,6 +29,7 @@ import { Menu } from '@cfxjs/antd';
 import { DropdownWrapper, MenuWrapper } from './AddressDetailPage';
 import { tokenTypeTag } from '../TokenDetail/Basic';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
+import { HexId } from './HexId';
 
 interface RouteParams {
   address: string;
@@ -135,7 +136,7 @@ export const ContractDetailPage = memo(() => {
             </IconWrapper>
             <div className="icons">
               <Copy address={address} />
-              <Qrcode address={address} />
+              <Qrcode address={address} /> <HexId />
               <DropdownWrapper overlay={menu} trigger={['click']}>
                 <span onClick={e => e.preventDefault()}>
                   {t(translations.general.address.more.title)}{' '}
