@@ -133,7 +133,9 @@ export const AddressContainer = withTranslation()(
             hoverValue: formatAddress(contractCreated),
             hrefAddress: formatAddress(contractCreated),
             content:
-              txtContractCreation + formatAddress(contractCreated).slice(-4),
+              txtContractCreation +
+              '...' +
+              formatAddress(contractCreated).slice(-4),
             isLink,
             isFull,
             maxWidth: 160,
