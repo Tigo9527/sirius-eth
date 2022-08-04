@@ -24,7 +24,7 @@ export function Block() {
     hash: string;
   }>();
   const [
-    { transactionCount, hash: blockHash /*, refereeHashes*/ },
+    { transactionCount, hash: blockHash, epochNumber /*, refereeHashes*/ },
     setBlockDetail,
   ] = useState<any>({
     transactionCount: 0,
@@ -106,7 +106,9 @@ export function Block() {
         <title>{t(translations.block.title)}</title>
         <meta name="description" content={t(translations.block.description)} />
       </Helmet>
-      <PageHeader>{t(translations.block.title)}</PageHeader>
+      <PageHeader subtitle={hash + ' @ ' + epochNumber}>
+        {t(translations.block.title)}
+      </PageHeader>
       <TabsTablePanel tabs={tabs} />
     </StyledPageWrapper>
   );

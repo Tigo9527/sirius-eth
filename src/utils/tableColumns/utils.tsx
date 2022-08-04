@@ -123,7 +123,9 @@ export const ColumnAge = ({
             whiteSpace: 'nowrap',
           }}
         >
-          {dayjs.unix(value).format('YYYY-MM-DD HH:mm:ss')}
+          {(/^\d+$/.test(value) ? dayjs.unix(value) : dayjs(value)).format(
+            'YYYY-MM-DD HH:mm:ss',
+          )}
         </div>
       ),
   };

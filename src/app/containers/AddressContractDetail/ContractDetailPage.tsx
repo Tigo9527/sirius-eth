@@ -34,6 +34,7 @@ import { LOCALSTORAGE_KEYS_MAP } from 'utils/constants';
 import { Bookmark } from '@zeit-ui/react-icons';
 import { Text } from 'app/components/Text/Loadable';
 import { CreateAddressLabel } from '../Profile/CreateAddressLabel';
+import { HexId } from './HexId';
 
 interface RouteParams {
   address: string;
@@ -187,7 +188,7 @@ export const ContractDetailPage = memo(() => {
             </IconWrapper>
             <div className="icons">
               <Copy address={address} />
-              <Qrcode address={address} />
+              <Qrcode address={address} /> <HexId />
               <DropdownWrapper overlay={menu} trigger={['click']}>
                 <span onClick={e => e.preventDefault()}>
                   {t(translations.general.address.more.title)}{' '}

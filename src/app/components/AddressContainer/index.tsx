@@ -205,6 +205,10 @@ export const AddressContainer = withTranslation()(
             addressLabel,
             hoverValue: formatAddress(contractCreated),
             hrefAddress: formatAddress(contractCreated),
+            content:
+              txtContractCreation +
+              '...' +
+              formatAddress(contractCreated).slice(-4),
             isLink,
             isFull,
             maxWidth: 160,

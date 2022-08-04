@@ -17,6 +17,7 @@ import DownIcon from '../../../images/down.png';
 import { MenuWrapper } from '../AddressContractDetail/AddressDetailPage';
 import { Dropdown, Menu } from '@cfxjs/antd';
 import descIcon from 'images/table-desc.svg';
+import { HexId } from '../AddressContractDetail/HexId';
 
 // import { useGlobal } from 'utils/hooks/useGlobal';
 
@@ -133,7 +134,8 @@ export function TokenDetail() {
             </div>
             <div className="basic-symbol">{`(${
               data.symbol || t(translations.general.notAvailable)
-            })`}</div>
+            })`}</div>{' '}
+            <HexId />
             {isFC ? (
               <div className="basic-link">
                 <Link href="https://fccfx.confluxscan.io/" target="_blank">
