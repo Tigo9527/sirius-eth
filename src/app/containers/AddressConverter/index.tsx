@@ -16,7 +16,7 @@ import { Remark } from '../../components/Remark';
 import { CopyButton } from '../../components/CopyButton';
 import { Input, Button, Link } from '@cfxjs/react-ui';
 import SDK from 'js-conflux-sdk/dist/js-conflux-sdk.umd.min.js';
-
+import fetch from '../../../utils/request';
 import { useParams } from 'react-router-dom';
 import { List } from './List';
 import { trackEvent } from 'utils/ga';
@@ -67,7 +67,11 @@ export function AddressConverter() {
         : reject(new Error(translations.general.errors.invalidAddress)),
     );
   };
-
+  const [hex, setHex] = useState('');
+  const [transfer20, setTransfer20] = useState('-');
+  const [transfer721, setTransfer721] = useState('-');
+  const [transfer1155, setTransfer1155] = useState('-');
+  const [transferType, setTransferType] = useState('');
   const handleConvert = () => {
     let hexAddress,
       hexChecksumAddress,
@@ -79,6 +83,41 @@ export function AddressConverter() {
       bytes32NetAddressWithType;
 
     try {
+      if (address.match(/^[\d]+$/)) {
+        setError('fetching...');
+        fetch('/stat/devops/hexId?hexId=' + address).then(result => {
+          if (result['hex']) {
+            result['hex'].hex = `0x${result['hex'].hex}`;
+            setHex(result['hex'].hex);
+          }
+          // @ts-ignore
+          if (result.token) {
+            // @ts-ignore
+            const { name, symbol, base32, createdAt } = result.token;
+            // @ts-ignore
+            result.token = { name, symbol, base32, createdAt };
+          }
+          setError(JSON.stringify(result));
+          [
+            { t: 'ERC20', set: setTransfer20 },
+            { t: 'ERC721', set: setTransfer721 },
+            { t: 'ERC1155', set: setTransfer1155 },
+          ].forEach(type => {
+            fetch(
+              // @ts-ignore
+              `/v1/transfer?address=${result.hex.hex}&limit=1&transferType=${type.t}`,
+            )
+              .then(res => {
+                type.set(res['list'].length ? 'Yes' : '0');
+                if (res['list'].length) {
+                  setTransferType(type.t);
+                }
+              })
+              .catch(undefined);
+          });
+        });
+        return;
+      }
       if (address === '') {
         setError('');
         setFormattedAddresses(DEFAULT_FORMATTED_ADDRESSES);
@@ -233,7 +272,6 @@ export function AddressConverter() {
               ></Input>
             </>
           )}
-          <div className="convert-address-error">{errorMessage}</div>
         </div>
         <Button
           variant="solid"
@@ -245,6 +283,23 @@ export function AddressConverter() {
           {t(translations.addressConverter.button)}
         </Button>
       </StyledInputWrapper>
+      {hex && <Link href={`/address/${hex}`}>{hex}</Link>}
+      {hex && (
+        <span>
+          {' '}
+          transfer: 20:{transfer20}, 721:{transfer721}, 1155:{transfer1155}
+        </span>
+      )}
+      {transferType && (
+        <a
+          target={'_blank'}
+          href={`/v1/transfer?address=${hex}&transferType=${transferType}&limit=1`}
+        >
+          {' '}
+          view
+        </a>
+      )}
+      <div className="convert-address-error">{errorMessage}</div>
       <StyledResultWrapper>
         <Card>
           <List title={t(translations.addressConverter.lowercase)}>

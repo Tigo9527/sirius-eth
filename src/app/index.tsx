@@ -103,6 +103,7 @@ import zhCN from '@cfxjs/antd/lib/locale/zh_CN';
 import moment from 'moment';
 import { ConfigProvider } from '@cfxjs/antd';
 import 'moment/locale/zh-cn';
+import { AddressConverter } from './containers/AddressConverter/Loadable';
 
 // WebFontLoader.load({
 //   custom: {
@@ -414,6 +415,14 @@ export function App() {
                             component={NotFoundAddressPage}
                           />
                           <Route path="/search/:text" component={Search} />
+                          <Route
+                            exact
+                            path={[
+                              '/address-converter',
+                              '/address-converter/:address',
+                            ]}
+                            component={AddressConverter}
+                          />
                           <Route
                             exact
                             path="/token/:tokenAddress"

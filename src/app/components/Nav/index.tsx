@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import React, { HTMLAttributes, memo, ReactNode } from 'react';
 import styled from 'styled-components/macro';
 import { media, useBreakpoint } from 'styles/media';
+import { Notices } from '../../containers/Notices/Loadable';
 
 interface Props extends HTMLAttributes<HTMLElement> {
   brand: ReactNode;
@@ -88,6 +89,9 @@ export const Nav = memo(
           ) : (
             <div>{sourceSubMenu}</div>
           )}
+          <div>
+            <Notices />
+          </div>
         </Container>
       </Outer>
     );

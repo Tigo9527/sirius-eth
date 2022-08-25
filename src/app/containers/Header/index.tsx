@@ -134,6 +134,15 @@ export const Header = memo(() => {
   const toolItems = [
     {
       title: [
+        t(translations.header.addressConverter),
+        <Check size={18} key="check" />,
+      ],
+      name: ScanEvent.menu.action.addressConverter,
+      afterClick: menuClick,
+      href: '/address-converter',
+    },
+    {
+      title: [
         t(translations.header.broadcastTx),
         <Check size={18} key="check" />,
       ],
@@ -217,7 +226,7 @@ export const Header = memo(() => {
   }
 
   if (NETWORK_TYPE === NETWORK_TYPES.testnet) {
-    toolItems.unshift({
+    toolItems.push({
       title: [t(translations.header.faucet), <Check size={18} key="check" />],
       name: ScanEvent.menu.action.faucet,
       afterClick: menuClick,
