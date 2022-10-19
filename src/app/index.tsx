@@ -104,6 +104,7 @@ import moment from 'moment';
 import { ConfigProvider } from '@cfxjs/antd';
 import 'moment/locale/zh-cn';
 import { AddressConverter } from './containers/AddressConverter/Loadable';
+import { useInterval } from 'react-use';
 
 // WebFontLoader.load({
 //   custom: {
@@ -136,6 +137,9 @@ export function App() {
 
   moment.locale(lang);
   dayjs.locale(lang);
+  useInterval(() => {
+    window.document.title = window.location.port;
+  }, 1000);
 
   function _ScrollToTop(props) {
     const { pathname } = useLocation();
