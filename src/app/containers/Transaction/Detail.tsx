@@ -569,7 +569,7 @@ export const Detail = () => {
           break;
       }
     }
-    if (transferList.length > 5) {
+    if (transferList.length > 15) {
       transferListContainerStyle = { height: '8.5714rem', overflow: 'auto' };
     }
     return (
@@ -853,6 +853,7 @@ export const Detail = () => {
         >
           <SkeletonContainer shown={loading}>
             <GasFee fee={gasFee} sponsored={gasCoveredBySponsor} />
+            @ {`${toThousands(gasPrice)} drip`}
           </SkeletonContainer>
         </Description>
         <div
